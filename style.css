@@ -1,0 +1,172 @@
+body {
+    background-color: #617a5e;
+    margin: 0;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr auto; 
+    gap: 15px;
+    min-height: 95vh; 
+}
+
+
+/* الخلفية الداكنة عند التكبير */
+.page-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(59, 55, 55, 0.6);
+    z-index: 50;
+    display: none; 
+    transition: all 0.3s ease;
+}
+.page-overlay.active {
+    display: block;
+}
+
+.box {
+    position: relative;
+    background-color: #cbeacfe5;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #333;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    color: #cbeacfe5; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.box:hover:not(.expanded):not(.box5) {
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+}
+
+
+.box1 { background: url('personal.png') center/cover no-repeat; }
+.box2 { background: url('work.jpg') center/cover no-repeat; }
+.box3 { background: url('home.jpeg') center/cover no-repeat; }
+.box4 { background: url('connection.jpeg') center/cover no-repeat; }
+
+.box5 {
+    grid-column: 1 / span 2; 
+    background-color: #cbeacfe5;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px solid #333;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    cursor: default;
+}
+
+.box.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 85vh;
+    z-index: 100;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+    justify-content: flex-start;
+    cursor: default; 
+    padding-top: 40px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 25px;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    text-shadow: none;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    width: 35px; height: 35px;
+    line-height: 35px;
+    transition: background 0.3s;
+}
+.close-btn:hover { background: #dc3545; }
+.box.expanded .close-btn { display: block; }
+
+.box .formulaire, .box .to_do_liste { display: none; }
+.box.expanded .formulaire, .box.expanded .to_do_liste { display: block; margin-top: 20px; }
+
+.formulaire {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.tacheInput {
+    flex-grow: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    outline: none;
+}
+.tacheInput:focus { border-color: #28a745; }
+
+.formulaire button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    background-color: #28a745;
+    color: #cbeacfe5;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.formulaire button:hover { background-color: #218838; }
+
+.to_do_liste {
+    list-style: none;
+    padding: 0;
+    width: 85%;
+    margin: 10px auto;
+    max-height: 50vh; 
+    overflow-y: auto; 
+}
+
+.to_do_liste li {
+    background-color: rgba(203, 234, 207, 0.898);
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: #222; 
+    font-size: 18px;
+    text-shadow: none; 
+}
+
+.task-text { flex-grow: 1; text-align: left; transition: all 0.3s ease; }
+.task-text.completed { text-decoration: line-through; color: #999; }
+
+.task-buttons { display: flex; gap: 8px; margin-left: 10px; }
+.task-buttons button {
+    border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; font-size: 14px; color: white;
+}
+.done-btn { background-color: #28a745; }
+.done-btn:hover { background-color: #218838; }
+.delete-btn { background-color: #dc3545; }
+.delete-btn:hover { background-color: #c82333; }

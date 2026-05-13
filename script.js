@@ -1,0 +1,74 @@
+const boxes = document.querySelectorAll(".box:not(.box5)"); 
+const overlay = document.getElementById("overlay");
+
+function closeAllBoxes() {
+    boxes.forEach(b => b.classList.remove("expanded"));
+    overlay.classList.remove("active");
+}
+
+boxes.forEach(box => {
+    box.addEventListener("click", function(e) {
+        if (!this.classList.contains("expanded")) {
+            closeAllBoxes();
+            this.classList.add("expanded");
+            overlay.classList.add("active");
+        }
+    });
+
+    const closeBtn = box.querySelector(".close-btn");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            closeAllBoxes();
+        });
+    }
+
+    const form = box.querySelector(".formulaire");
+    const input = box.querySelector(".tacheInput");
+    const todoList = box.querySelector(".to_do_liste");
+
+    if (form) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault(); 
+            const taskText = input.value.trim(); 
+
+            if (taskText !== "") {
+                const li = document.createElement("li");
+
+                const span = document.createElement("span");
+                span.textContent = taskText;
+                span.className = "task-text"; 
+
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.className = "task-buttons";
+
+                const doneBtn = document.createElement("button");
+                doneBtn.innerHTML = "✔";
+                doneBtn.className = "done-btn";
+                doneBtn.addEventListener("click", function(e) {
+                    e.stopPropagation(); 
+                    span.classList.toggle("completed");
+                });
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.innerHTML = "✖";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.addEventListener("click", function(e) {
+                    e.stopPropagation(); 
+                    li.remove();
+                });
+
+                buttonsDiv.appendChild(doneBtn);
+                buttonsDiv.appendChild(deleteBtn);
+
+                li.appendChild(span);
+                li.appendChild(buttonsDiv);
+                
+                todoList.appendChild(li);
+                input.value = ""; 
+            }
+        });
+    }
+});
+
+overlay.addEventListener("click", closeAllBoxes);
